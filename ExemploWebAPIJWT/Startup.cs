@@ -71,6 +71,19 @@ namespace ExemploWebAPIJWT
                     .RequireAuthenticatedUser().Build());
             });
 
+            // Add service and create Policy with options
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+
+
+      
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -81,6 +94,9 @@ namespace ExemploWebAPIJWT
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("CorsPolicy");
+
 
             app.UseMvc();
 
